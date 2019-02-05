@@ -14,7 +14,8 @@
     "testEnvironment": "node"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "coffee -c index.coffee"
   },
   "author": "Tomáš Celizna <tomas.celizna@gmail.com>",
   "license": "MIT",
