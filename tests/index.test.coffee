@@ -64,3 +64,34 @@ it 'works with multiple', ->
     color: yellow; }
   """
   run input, expected, {}
+
+it 'does not touch media queries', ->
+  input = """
+    @media all {
+      body {
+        /*! placeholder:start %font-size-xs-15 */
+        font-size: 1.5rem;
+        /*! placeholder:end */ }
+    }
+
+    @media all {
+      .foo {
+        color: yellow;
+        /*! placeholder:start %font-size-xs-15 */
+        font-size: 2rem;
+        /*! placeholder:end */ }
+    }
+  """
+
+  expected = """
+  @media all {
+    body, .foo {
+      font-size: 1.5rem; }
+  }
+
+  @media all {
+    .foo {
+      color: yellow; }
+  }
+  """
+  run input, expected, {}
