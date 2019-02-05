@@ -27,5 +27,7 @@ it 'extracts placeholders', ->
     font-size: 1.5rem; }
 
   body {}
+
+  .foo {}
   """
   run input, expected, {}
