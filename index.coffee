@@ -14,6 +14,8 @@ module.exports = postcss.plugin 'postcss-merge-extends', (opts) ->
         newNode.append(rule) for rule in placeholderContent
         commentNode.parent.before(newNode)
 
+      removePlaceholders(root, name)
+
     return
 
 isExtendStart = (node) ->
@@ -63,3 +65,15 @@ getPlaceholderNames = (root) ->
       name = getPlaceholderName(comment)
       res.push(name) unless name in res
   res
+
+removePlaceholders = (root, name) ->
+  root.walkComments (comment) ->
+    if hasPlaceholderName(comment, name)
+      nextNode = comment.next()
+      comment.remove()
+      while nextNode && !isExtendEnd(nextNode)
+        _nextNode = nextNode.next()
+        nextNode.remove()
+        nextNode = _nextNode
+      if isExtendEnd(nextNode)
+        nextNode.remove()
