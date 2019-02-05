@@ -14,20 +14,27 @@ it 'extracts placeholders', ->
     body {
       /*! extend:start %font-size-xs-15 */
       font-size: 1.5rem;
-      /*! extend:end */ }
+      line-height: 1em;
+      /*! extend:end */
+      background: pink; }
 
     .foo {
+      color: yellow;
       /*! extend:start %font-size-xs-15 */
       font-size: 1.5rem;
+      line-height: 1em;
       /*! extend:end */ }
   """
 
   expected = """
   body, .foo {
-    font-size: 1.5rem; }
+    font-size: 1.5rem;
+    line-height: 1em; }
 
-  body { }
+  body {
+    background: pink; }
 
-  .foo { }
+  .foo {
+    color: yellow; }
   """
   run input, expected, {}
