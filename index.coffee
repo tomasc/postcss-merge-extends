@@ -15,16 +15,17 @@ module.exports = postcss.plugin 'postcss-merge-extends', (opts) ->
         commentNode.parent.before(newNode)
 
       removePlaceholders(root, name)
+      root.each(discardEmpty)
 
     return
 
 isExtendStart = (node) ->
   return unless node.type is 'comment'
-  /extend\:start/.test(node.text)
+  /placeholder\:start/.test(node.text)
 
 isExtendEnd = (node) ->
   return unless node.type is 'comment'
-  /extend\:end/.test node.text
+  /placeholder\:end/.test node.text
 
 hasPlaceholderName = (node, name) ->
   return unless isExtendStart(node)
@@ -77,3 +78,10 @@ removePlaceholders = (root, name) ->
         nextNode = _nextNode
       if isExtendEnd(nextNode)
         nextNode.remove()
+
+discardEmpty = (node) ->
+    type = node.type
+    sub = node.nodes
+    params = node.params
+    node.each(discardEmpty) if sub
+    node.remove() if (type is 'decl' && !node.value) || (type is 'rule' && !node.selector || sub && !sub.length) || (type is 'atrule' && (!sub && !params || !params && !sub.length))

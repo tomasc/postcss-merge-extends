@@ -9,21 +9,21 @@ run = (input, output, opts) ->
 
 # ---------------------------------------------------------------------
 
-it 'extracts placeholders', ->
+it 'extracts placeholders and merges selectors', ->
   input = """
     body {
-      /*! extend:start %font-size-xs-15 */
+      /*! placeholder:start %font-size-xs-15 */
       font-size: 1.5rem;
       line-height: 1em;
-      /*! extend:end */
+      /*! placeholder:end */
       background: pink; }
 
     .foo {
       color: yellow;
-      /*! extend:start %font-size-xs-15 */
+      /*! placeholder:start %font-size-xs-15 */
       font-size: 1.5rem;
       line-height: 1em;
-      /*! extend:end */ }
+      /*! placeholder:end */ }
   """
 
   expected = """
@@ -33,6 +33,32 @@ it 'extracts placeholders', ->
 
   body {
     background: pink; }
+
+  .foo {
+    color: yellow; }
+  """
+  run input, expected, {}
+
+it 'works with multiple', ->
+  input = """
+    body {
+      /*! placeholder:start %font-size-xs-15 */
+      font-size: 1.5rem;
+      /*! placeholder:end */ }
+
+    .foo {
+      color: yellow;
+      /*! placeholder:start %font-size-xs-20 */
+      font-size: 2rem;
+      /*! placeholder:end */ }
+  """
+
+  expected = """
+  body {
+    font-size: 1.5rem; }
+
+  .foo {
+    font-size: 2rem; }
 
   .foo {
     color: yellow; }
