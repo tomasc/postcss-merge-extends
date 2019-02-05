@@ -9,8 +9,12 @@
     "sass",
     "scss"
   ],
+  "jest": {
+    "preset": "jest-preset-coffeescript",
+    "testEnvironment": "node"
+  },
   "scripts": {
-    "test": "jest && eslint *.js"
+    "test": "jest"
   },
   "author": "Tomáš Celizna <tomas.celizna@gmail.com>",
   "license": "MIT",
@@ -24,6 +28,7 @@
   },
   "devDependencies": {
     "@logux/eslint-config": "^27.0.0",
+    "coffeescript": "^2.3.2",
     "eslint": "^5.10.0",
     "eslint-config-postcss": "^3.0.7",
     "eslint-config-standard": "^12.0.0",
@@ -34,12 +39,10 @@
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-security": "^1.4.0",
     "eslint-plugin-standard": "^4.0.0",
-    "jest": "^23.6.0"
+    "jest": "^23.6.0",
+    "jest-preset-coffeescript": "^1.0.0"
   },
   "eslintConfig": {
     "extends": "eslint-config-postcss/es5"
-  },
-  "jest": {
-    "testEnvironment": "node"
   }
 }
