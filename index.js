@@ -120,7 +120,7 @@
           nextNode.remove();
           nextNode = _nextNode;
         }
-        if (isExtendEnd(nextNode)) {
+        if (nextNode && isExtendEnd(nextNode)) {
           return nextNode.remove();
         }
       }

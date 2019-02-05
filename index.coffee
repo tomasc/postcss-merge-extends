@@ -76,7 +76,7 @@ removePlaceholders = (root, name) ->
         _nextNode = nextNode.next()
         nextNode.remove()
         nextNode = _nextNode
-      if isExtendEnd(nextNode)
+      if nextNode && isExtendEnd(nextNode)
         nextNode.remove()
 
 discardEmpty = (node) ->
